@@ -2,6 +2,7 @@ package com.gamedoanso.controller;
 
 import com.gamedoanso.dto.GuessRequest;
 import com.gamedoanso.dto.GuessResponse;
+import com.gamedoanso.dto.UserProfileResponse;
 import com.gamedoanso.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,14 @@ public class GameController {
 
     @PostMapping("/guess")
     public ResponseEntity<GuessResponse> guess(
-            @RequestBody GuessRequest request,
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody GuessRequest request) {
+        return ResponseEntity.ok(gameService.processGuess(userDetails.getUsername(), request));
+    }
+
+    @PostMapping("/buy-turns")
+    public ResponseEntity<UserProfileResponse> buyTurns(
             @AuthenticationPrincipal UserDetails userDetails) {
-        GuessResponse response = gameService.processGuess(userDetails.getUsername(), request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(gameService.buyTurns(userDetails.getUsername()));
     }
 }

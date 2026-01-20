@@ -59,4 +59,20 @@ public class GameService {
                 .message(won ? "Congratulations! You made the right choice." : "You made the wrong choice.")
                 .build();
     }
+
+    @Transactional
+    public com.gamedoanso.dto.UserProfileResponse buyTurns(String username) {
+        User user = userRepository.findWithLockByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setTurns(user.getTurns() + 5);
+        userRepository.save(user);
+
+        return com.gamedoanso.dto.UserProfileResponse.builder()
+                .username(user.getUsername())
+                .score(user.getScore())
+                .turns(user.getTurns())
+                .message("Successfully purchased 10 turns!")
+                .build();
+    }
 }

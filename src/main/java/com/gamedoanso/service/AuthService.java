@@ -5,7 +5,11 @@ import com.gamedoanso.dto.AuthResponse;
 import com.gamedoanso.entity.User;
 import com.gamedoanso.repository.UserRepository;
 import com.gamedoanso.security.JwtService;
+
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +33,11 @@ public class AuthService {
                                 .build();
                 repository.save(user);
 
-                var userDetails = org.springframework.security.core.userdetails.User.builder()
-                                .username(user.getUsername())
-                                .password(user.getPassword())
-                                .authorities("USER")
-                                .build();
+                var userDetails = new org.springframework.security.core.userdetails.User(
+                                user.getUsername(),
+                                user.getPassword(),
+                                Collections.singletonList(new SimpleGrantedAuthority("USER")));
+
                 var jwtToken = jwtService.generateToken(userDetails);
                 return AuthResponse.builder()
                                 .token(jwtToken)
@@ -46,11 +50,11 @@ public class AuthService {
                 if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
                         throw new RuntimeException("Invalid password");
                 }
-                var userDetails = org.springframework.security.core.userdetails.User.builder()
-                                .username(user.getUsername())
-                                .password(user.getPassword())
-                                .authorities("USER")
-                                .build();
+                var userDetails = new org.springframework.security.core.userdetails.User(
+                                user.getUsername(),
+                                user.getPassword(),
+                                Collections.singletonList(new SimpleGrantedAuthority("USER")));
+
                 var jwtToken = jwtService.generateToken(userDetails);
                 return AuthResponse.builder()
                                 .token(jwtToken)

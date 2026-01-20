@@ -3,6 +3,7 @@ com\gamedoanso\service\AuthService.class
 com\gamedoanso\config\ApplicationConfig.class
 com\gamedoanso\repository\UserRepository.class
 com\gamedoanso\dto\AuthResponse.class
+com\gamedoanso\dto\UserProfileResponse.class
 com\gamedoanso\dto\GuessRequest.class
 com\gamedoanso\dto\AuthRequest.class
 com\gamedoanso\entity\User$UserBuilder.class
@@ -17,4 +18,5 @@ com\gamedoanso\dto\GuessResponse$GuessResponseBuilder.class
 com\gamedoanso\service\GameService.class
 com\gamedoanso\dto\GuessRequest$GuessRequestBuilder.class
 com\gamedoanso\controller\GameController.class
+com\gamedoanso\dto\UserProfileResponse$UserProfileResponseBuilder.class
 com\gamedoanso\config\SecurityConfig.class
