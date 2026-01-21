@@ -2,13 +2,16 @@ package com.gamedoanso.service;
 
 import com.gamedoanso.dto.GuessRequest;
 import com.gamedoanso.dto.GuessResponse;
+import com.gamedoanso.dto.UserProfileResponse;
 import com.gamedoanso.entity.User;
 import com.gamedoanso.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -61,18 +64,42 @@ public class GameService {
     }
 
     @Transactional
-    public com.gamedoanso.dto.UserProfileResponse buyTurns(String username) {
+    public UserProfileResponse buyTurns(String username) {
         User user = userRepository.findWithLockByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         user.setTurns(user.getTurns() + 5);
         userRepository.save(user);
 
-        return com.gamedoanso.dto.UserProfileResponse.builder()
+        return UserProfileResponse.builder()
                 .username(user.getUsername())
                 .score(user.getScore())
                 .turns(user.getTurns())
-                .message("Successfully purchased 10 turns!")
+                .message("Successfully purchased 5 turns!")
                 .build();
     }
+
+    @Transactional
+    public List<UserProfileResponse> getLeaderboard() {
+        return userRepository.findTop10ByOrderByScoreDesc().stream()
+                .map(user -> UserProfileResponse.builder()
+                        .username(user.getUsername())
+                        .score(user.getScore())
+                        .turns(user.getTurns())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public UserProfileResponse getUserProfile(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return UserProfileResponse.builder()
+                .username(user.getUsername())
+                .score(user.getScore())
+                .turns(user.getTurns())
+                .build();
+    }
+
 }
