@@ -81,7 +81,7 @@ public class GameService {
 
     @Transactional
     public List<UserProfileResponse> getLeaderboard() {
-        return userRepository.findTop10ByOrderByScoreDesc().stream()
+        return userRepository.findTop10ByOrderByScoreDescIdAsc().stream()
                 .map(user -> UserProfileResponse.builder()
                         .username(user.getUsername())
                         .score(user.getScore())
