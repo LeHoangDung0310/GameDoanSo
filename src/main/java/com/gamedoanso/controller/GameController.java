@@ -27,11 +27,11 @@ public class GameController {
         return ResponseEntity.ok(gameService.processGuess(userDetails.getUsername(), request));
     }
 
-    @PostMapping("/buy-turns")
-    public ResponseEntity<UserProfileResponse> buyTurns(
-            @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(gameService.buyTurns(userDetails.getUsername()));
-    }
+    // @PostMapping("/buy-turns")
+    // public ResponseEntity<UserProfileResponse> buyTurns(
+    // @AuthenticationPrincipal UserDetails userDetails) {
+    // return ResponseEntity.ok(gameService.buyTurns(userDetails.getUsername()));
+    // }
 
     @GetMapping("/leaderboard")
     public ResponseEntity<List<UserProfileResponse>> getLeaderboard() {
