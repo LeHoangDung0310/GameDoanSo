@@ -39,6 +39,7 @@ public class GameService {
         int serverNumber;
         boolean won;
 
+        // tỷ lệ 5% đoán trúng
         double winrate = 0.05;
         if (random.nextDouble() < winrate) {
             serverNumber = guess;

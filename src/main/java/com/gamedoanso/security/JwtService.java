@@ -37,14 +37,12 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
+    // mở rộng trong trương lai nếu có thêm role
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
-    private String buildToken(
-            Map<String, Object> extraClaims,
-            UserDetails userDetails,
-            long expiration) {
+    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -55,19 +53,23 @@ public class JwtService {
                 .compact();
     }
 
+    // kiểm tra token có hợp lệ không
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
+    // kiểm tra token đã hết hạn chưa
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
+    // lấy ngày hết hạn từ token
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    // Xác minh chữ ký
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
