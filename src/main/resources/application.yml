@@ -17,10 +17,10 @@ application:
       secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
       expiration: 86400000 # 1 day
 
-# VNPAY Configuration
+# Cấu hình VNPAY
 vnpay:
-  tmnCode: 3Q8PW5V4 # Replace with your VNPAY TmnCode
-  hashSecret: KZXVP0WRGYVA8L0Z9FSWP5DNONYEMMAP # Replace with your VNPAY HashSecret
-  url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html # VNPAY sandbox URL
-  returnUrl: http://localhost:3000/payment/return # Frontend return URL
-  apiUrl: https://sandbox.vnpayment.vn/merchantv2/
+  tmnCode: 3Q8PW5V4 # Thay bằng mã TmnCode của bạn từ VNPAY
+  hashSecret: KZXVP0WRGYVA8L0Z9FSWP5DNONYEMMAP # Thay bằng mã bí mật HashSecret của bạn từ VNPAY
+  url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html # URL môi trường thử nghiệm (sandbox) của VNPAY
+  returnUrl: http://localhost:3000/payment/return # URL chuyển hướng về Frontend sau khi thanh toán
+  apiUrl: https://sandbox.vnpayment.vn/merchantv2/ # URL API của VNPAY
